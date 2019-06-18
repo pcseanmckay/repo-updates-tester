@@ -1,0 +1,53 @@
+---
+- name: Update all installed packages
+  yum:
+    name: '*'
+    state: latest
+
+- name: Install package from base repo
+  yum:
+    name: tree
+    state: latest
+
+- name: Install EPEL repo file
+  template:
+    src: epel_repo.j2
+    dest: /etc/yum.repos.d/epel.repo
+    owner: root
+    group: root
+  when: ansible_distribution | lower == 'centos'
+
+- name: Install IUS repo file
+  template:
+    src: ius_repo.j2
+    dest: /etc/yum.repos.d/ius.repo
+    owner: root
+    group: root
+  when: ansible_distribution | lower == 'centos'
+
+- name: Install package from EPEL repo
+  yum:
+    name: python36
+    state: latest
+  when: ansible_distribution | lower == 'centos'
+
+- name: Install package from IUS repo
+  yum:
+    name: git2u
+    state: latest
+  when: ansible_distribution | lower == 'centos'
+
+- name: Install python virtualenv for pip module use
+  yum:
+    name: python-virtualenv
+    state: latest
+  when: ansible_distribution | lower == 'centos'
+
+- name: Install pip3 modules
+  pip:
+    name: "{{ rut_pip_modules }}"
+    virtualenv: /pip_test/venv
+    virtualenv_python: python3.6
+    extra_args: "-i {{ rut_pypi_index_site }} --trusted-host {{ rut_pypi_trusted_host }}"
+    state: latest
+  when: ansible_distribution | lower == 'centos'

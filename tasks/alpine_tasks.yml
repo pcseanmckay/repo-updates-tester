@@ -1,0 +1,9 @@
+---
+- name: Update all installed packages
+  apk:
+    upgrade: yes
+
+- name: Install package from base repo
+  apk:
+    name: tree
+    state: present

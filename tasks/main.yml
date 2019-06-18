@@ -1,2 +1,4 @@
 ---
 # tasks file for repo-updates-tester
+- name: Import OS Specific Tasks
+  include_tasks: "{{ ansible_os_family | lower }}_tasks.yml"

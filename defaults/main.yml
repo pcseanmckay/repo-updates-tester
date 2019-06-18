@@ -1,2 +1,16 @@
 ---
 # defaults file for repo-updates-tester
+
+rut_ius_baseurl: "https://repo.ius.io/7/$basearch/"
+
+rut_epel_baseurl: "http://download.fedoraproject.org/pub/epel/7/$basearch"
+
+rut_pypi_index_site: "https://pypi.org/simple"
+
+rut_pypi_trusted_host: "pypi.org"
+
+rut_pip_modules:
+  - ansible
+  - ansible-lint
+  - yamllint
+  - python-openstackclient

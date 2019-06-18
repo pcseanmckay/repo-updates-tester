@@ -1,0 +1,10 @@
+---
+- name: Update all installed packages
+  apt:
+    name: '*'
+    state: latest
+
+- name: Install package from base repo
+  apt:
+    name: tree
+    state: latest
