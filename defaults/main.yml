@@ -14,3 +14,7 @@ rut_pip_modules:
   - ansible-lint
   - yamllint
   - python-openstackclient
+
+rut_private_cert: false
+
+rut_private_cert_file: "cert.crt"

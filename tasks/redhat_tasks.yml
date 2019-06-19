@@ -1,4 +1,14 @@
 ---
+- name: Add private ca-cert, if necessary
+  copy:
+    src: "files/{{ rut_private_cert_file }}"
+    dest: "/etc/pki/ca-trust/source/anchors/{{ rut_private_cert_file }}"
+  when: rut_private_cert|bool
+
+- name: Update ca trust with private ca-cert, if necessary
+  command: update-ca-trust
+  when: rut_private_cert|bool
+
 - name: Update all installed packages
   yum:
     name: '*'
