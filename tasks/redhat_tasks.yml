@@ -5,9 +5,28 @@
     dest: "/etc/pki/ca-trust/source/anchors/{{ rut_private_cert_file }}"
   when: rut_private_cert|bool
 
+- name: Check system certificate store hash
+  command: sha256sum {{ rut_ca_cert_file }}
+  register: rut_ca_hash_before
+  when: rut_private_cert|bool
+  changed_when: false
+
 - name: Update ca trust with private ca-cert, if necessary
   command: update-ca-trust
   when: rut_private_cert|bool
+  changed_when: false
+
+- name: Check system certificate store hash after update ca trust
+  command: sha256sum {{ rut_ca_cert_file }}
+  register: rut_ca_hash_after
+  when: rut_private_cert|bool
+  changed_when: false
+
+- name: Check for ca store updates for idempotence
+  debug:
+    msg: CA store was updated!
+  when: (rut_private_cert|bool) and (rut_ca_hash_before.stdout != rut_ca_hash_after.stdout)
+  changed_when: true
 
 - name: Update all installed packages
   yum:

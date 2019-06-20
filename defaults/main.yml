@@ -18,3 +18,5 @@ rut_pip_modules:
 rut_private_cert: false
 
 rut_private_cert_file: "cert.crt"
+
+rut_ca_cert_file: "/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem"
